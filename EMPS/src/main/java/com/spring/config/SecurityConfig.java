@@ -47,10 +47,12 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean public AuthenticationProvider authenticationProvider(){
+    @Bean 
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider; }
+        return authenticationProvider; 
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
