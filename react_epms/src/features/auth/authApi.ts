@@ -8,6 +8,15 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      transformResponse: (response: any) => {
+        // Transform backend response to match expected format
+        return {
+          access_token: response.accessToken || response.access_token,
+          refresh_token: response.refreshToken || response.refresh_token,
+          message: response.message,
+          userInfo: response.userInfo,
+        };
+      },
     }),
     register: builder.mutation({
       query: (data) => ({
@@ -16,10 +25,14 @@ export const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
-    // getProfile: builder.query({
-    //   query: () => "/users/me",
-    // }),
+    refreshToken: builder.mutation({
+      query: (data) => ({
+        url: "/auth/refresh",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation} = authApi;
+export const { useLoginMutation, useRegisterMutation, useRefreshTokenMutation } = authApi;
